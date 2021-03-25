@@ -33,4 +33,6 @@ class Task(db.Model, UserMixin):
             "name": self.name,
             "description": self.description,
             "status": self.status,
+            "comments": [comment.to_dict() for comment in self.comments],
+            "list_id": self.list_id
         }

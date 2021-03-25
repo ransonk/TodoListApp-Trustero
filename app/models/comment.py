@@ -23,5 +23,6 @@ class Comment(db.Model, UserMixin):
     def to_dict(self):
         return {
             "id": self.id,
-            "name": self.name,
+            "description": self.description,
+            "task_id": self.task_id
         }

@@ -19,8 +19,14 @@ class List(db.Model, UserMixin):
         back_populates="list"
     )
 
+    # def return_tasks(self):
+    #     return {
+    #     }
+
     def to_dict(self):
         return {
             "id": self.id,
             "name": self.name,
+            "tasks": [task.to_dict() for task in self.tasks]
+
         }
