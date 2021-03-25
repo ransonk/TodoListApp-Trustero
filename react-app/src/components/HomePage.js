@@ -1,91 +1,177 @@
 import React, {useState, useEffect} from 'react';
-import {fetchLists} from '../services/api'
+import {fetchComments, fetchLists, fetchTasks} from '../services/api'
+import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Avatar from '@material-ui/core/Avatar';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemText from '@material-ui/core/ListItemText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Dialog from '@material-ui/core/Dialog';
+import PersonIcon from '@material-ui/icons/Person';
+import AddIcon from '@material-ui/icons/Add';
+import Typography from '@material-ui/core/Typography';
+import { blue } from '@material-ui/core/colors';
+
+const emails = ['username@gmail.com', 'user02@gmail.com'];
+const useStyles = makeStyles({
+  avatar: {
+    backgroundColor: blue[100],
+    color: blue[600],
+  },
+});
+
+function SimpleDialog(props) {
+    const classes = useStyles();
+    const { onClose, selectedValue, open } = props;
+
+    const handleClose = () => {
+      onClose(selectedValue);
+    };
+
+    const handleListItemClick = (value) => {
+      onClose(value);
+    };
+
+    return (
+      <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
+        <DialogTitle id="simple-dialog-title">Set backup account</DialogTitle>
+        <List>
+          {emails.map((email) => (
+            <ListItem button onClick={() => handleListItemClick(email)} key={email}>
+              <ListItemAvatar>
+                <Avatar className={classes.avatar}>
+                  <PersonIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary={email} />
+            </ListItem>
+          ))}
+
+          <ListItem autoFocus button onClick={() => handleListItemClick('addAccount')}>
+            <ListItemAvatar>
+              <Avatar>
+                <AddIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary="Add account" />
+          </ListItem>
+        </List>
+      </Dialog>
+    );
+  }
+
+  SimpleDialog.propTypes = {
+    onClose: PropTypes.func.isRequired,
+    open: PropTypes.bool.isRequired,
+    selectedValue: PropTypes.string.isRequired,
+  };
 
 function HomePage(props) {
-
+    const [open, setOpen] = React.useState(false);
+    const [selectedValue, setSelectedValue] = React.useState(emails[1]);
     const [lists, setLists] = useState("")
+    const [tasks, setTasks] = useState("")
+    const [comments, setComments] = useState("")
+
+    const handleClickOpen = (task) => {
+        console.log(task)
+        setOpen(true);
+      };
+
+      const handleClose = (value) => {
+        setOpen(false);
+        setSelectedValue(value);
+      };
 
 
     useEffect(() => {
         (async () => {
             let tempList = await fetchLists();
+            let tempTasks = await fetchTasks();
+            let tempComments = await fetchComments();
             setLists(tempList)
+            setTasks(tempTasks)
+            // setComments(tempComments)
         })()
     }, [])
 
     let separatedLists = Object.values(lists)
-    let list1 = [];
-    let list2 = [];
-    let list3 = [];
+    let separatedTasks = Object.values(tasks)
+    // let separatedLists = Object.values(lists)
+    // console.log('separatedLists', separatedLists)
+    console.log('separatedTasks', separatedTasks)
+    // console.log('tasks', tasks)
 
-    separatedLists.map(list => {
-        if (list.id === 1) {
-            list1.push(list)
-            list1.push(list.tasks)
-        } else if (list.id === 2) {
-            list2.push(list)
-            list2.push(list.tasks)
+    let list1_arr = []
+    let list2_arr = []
+    let list3_arr = []
+
+    // separatedTasks.map(task => {
+    //     if (task.list_id === 1) {
+    //         list1_arr.push({task: task.name, id: task.id})
+    //     } else if (task.list_id === 2) {
+    //         list2_arr.push({task: task.name, id: task.id})
+    //     } else if (task.list_id === 3) {
+    //         list3_arr.push({task: task.name, id: task.id})
+    //     }
+
+    // })
+    separatedTasks.map(task => {
+        if (task.list_id === 1) {
+            list1_arr.push(task.name)
+        } else if (task.list_id === 2) {
+            list2_arr.push(task.name)
+        } else if (task.list_id === 3) {
+            list3_arr.push(task.name)
         }
-        else {
-            list3.push(list)
-            list3.push(list.tasks)
-        }
+
     })
 
-
-
-    console.log('list 1', list1)
-    console.log('list 2', list2)
-    console.log('list 3', list3)
-
-    let list1_Tasks = list1[1]
-    let list2_Tasks = list2[1]
-    let list3_Tasks = list3[1]
-
-    let commentObj = {}
-
-    if (!list1_Tasks) return null;
-
-    list1_Tasks.map(task => {
-        commentObj[task.id] = task.comments
-    })
-    list2_Tasks.map(task => {
-        commentObj[task.id] = task.comments
-    })
-    list3_Tasks.map(task => {
-        commentObj[task.id] = task.comments
-    })
-    console.log(commentObj)
-
-
-
-    // console.log('comment 1', comment1)
-
-    let task1_Comments = []
-    for (const property in commentObj) {
-
-    }
+    console.log(list1_arr)
+    console.log(list2_arr)
+    console.log(list3_arr)
 
 
     return (
         <div>
-            <ol> {list1[0].name}
-                {list1_Tasks.map(task => {
-                    return (
 
-                        <>
-                        <li>{task.name}</li>
-                        {/* <li>{commentObj[task.name]}</li> */}
-                        </>
-                    )
-                })}
-            </ol>
-            <ol> {list2[0].name}
-                {list2_Tasks.map(task => <li>{task.name}</li>)}
-            </ol>
-            <ol> {list1[0].name}
-                {list3_Tasks.map(task => <li>{task.name}</li>)}
-            </ol>
+            {separatedLists.map(({id, name}) => {
+                return (
+                    <ol>{name}
+                        {
+                        id === 1 ?
+                        list1_arr.map((task) => {
+                            return (
+                                <li onClick={() => handleClickOpen(task)}>{task}</li>
+                            )
+                        }) : id === 2 ?
+
+                        list2_arr.map((task) => {
+                            return (
+                                <li>{task}</li>
+                            )
+                        }) : id === 3 ?
+
+                        list3_arr.map((task) => {
+                            return (
+                                <li>{task}</li>
+                            )
+                        }) : null
+                    }
+
+                    </ol>
+                )
+            })}
+
+            {/* <Typography variant="subtitle1">Selected: {selectedValue}</Typography>
+            <br />
+            <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+                Open simple dialog
+            </Button> */}
+            <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} />
 
         </div>
     );
