@@ -27,6 +27,6 @@ class List(db.Model, UserMixin):
         return {
             "id": self.id,
             "name": self.name,
-            "tasks": [task.to_dict() for task in self.tasks]
+            # "tasks": [task.to_dict() for task in self.tasks]
 
         }
