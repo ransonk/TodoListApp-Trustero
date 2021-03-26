@@ -1,7 +1,6 @@
 from werkzeug.security import generate_password_hash
 from app.models import db, User, List, Task, Comment
 
-# Adds a demo user, you can add other users here if you want
 def seed_users():
 
     demo = User(username='Demo', email='demo@aa.io',
@@ -11,10 +10,7 @@ def seed_users():
 
     db.session.commit()
 
-# Uses a raw SQL query to TRUNCATE the users table.
-# SQLAlchemy doesn't have a built in function to do this
-# TRUNCATE Removes all the data from the table, and resets
-# the auto incrementing primary key
+
 def undo_seed_all():
     db.session.execute('TRUNCATE users;')
     db.session.execute('TRUNCATE lists CASCADE;')
@@ -35,41 +31,41 @@ def seed_lists():
 def seed_tasks():
 
     demo1 = Task(name="Task 1",
-                description="This is Task 1",
+                description="Task 1 Description",
                 status=False,
                 list_id=1)
     demo2 = Task(name="Task 2",
-                description="This is Task 2",
+                description="Task 2 Description",
                 status=False,
                 list_id=1)
     demo3 = Task(name="Task 3",
-                description="This is Task 3",
+                description="Task 3 Description",
                 status=False,
                 list_id=1)
 
     demo4 = Task(name="Task 4",
-                description="This is Task 4",
+                description="Task 4 Description",
                 status=False,
                 list_id=2)
     demo5 = Task(name="Task 5",
-                description="This is Task 5",
+                description="Task 5 Description",
                 status=False,
                 list_id=2)
     demo6 = Task(name="Task 6",
-                description="This is Task 6",
+                description="Task 6 Description",
                 status=False,
                 list_id=2)
 
     demo7 = Task(name="Task 7",
-                description="This is Task 7",
+                description="Task 7 Description",
                 status=False,
                 list_id=3)
     demo8 = Task(name="Task 8",
-                description="This is Task 8",
+                description="Task 8 Description",
                 status=False,
                 list_id=3)
     demo9 = Task(name="Task 9",
-                description="This is Task 9",
+                description="Task 9 Description",
                 status=False,
                 list_id=3)
 
