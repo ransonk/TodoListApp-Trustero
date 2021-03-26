@@ -52,7 +52,7 @@ export const createComment = async (description, task_id) => {
     return await response.json();
   }
 
-  export const deleteComment = async (commentId) => {
+export const deleteComment = async (commentId) => {
     const response = await fetch(`/api/comments/delete-comment/${commentId}`, {
       method: "DELETE",
       headers: {
@@ -67,3 +67,14 @@ export const createComment = async (description, task_id) => {
       window.location.href = '/';
     }
   }
+
+export const updateComment = async (id, description) => {
+    const response = await fetch(`/api/comments/update-comment/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ description }),
+    });
+    if (response.ok) {
+        window.location.href = '/';
+    }
+};

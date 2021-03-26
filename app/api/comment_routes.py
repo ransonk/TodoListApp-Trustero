@@ -27,11 +27,18 @@ def add_comment(id):
     return {'errors': validation_errors_to_error_messages(form.errors)}
 
 @comment_routes.route('/delete-comment/<int:id>', methods=["GET", "DELETE"])
-#this one ->>>>>>>>>>>
-# @login_required
 def delete_comment(id):
 
     comment = Comment.query.get(id)
     db.session.delete(comment)
     db.session.commit()
     return {'message':'delete successful'}
+
+@comment_routes.route("/update-comment/<int:id>", methods=["GET", "PUT"])
+def updateClient(id):
+    comment = Comment.query.get(id)
+    req_data = request.get_json()
+    comment.description = req_data['description']
+    db.session.add(comment)
+    db.session.commit()
+    return comment.to_dict()
