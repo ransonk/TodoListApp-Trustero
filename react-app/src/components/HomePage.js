@@ -15,6 +15,7 @@ import {Comment, AddCircleOutline, FlipCameraAndroid, Edit} from '@material-ui/i
 import { blue } from '@material-ui/core/colors';
 import { Divider, Grid } from '@material-ui/core';
 import { ThemeContext } from '../ThemeContext';
+import LogoutButton from './auth/LogoutButton';
 
 const emails = ['username@gmail.com', 'user02@gmail.com'];
 const useStyles = makeStyles({
@@ -29,7 +30,7 @@ const useStyles = makeStyles({
 });
 
 
-function HomePage(props) {
+function HomePage({setAuthenticated}) {
   const {value, setValue} = useContext(ThemeContext)
   const [open, setOpen] = React.useState(false);
   const [selectedValue, setSelectedValue] = React.useState(emails[1]);
@@ -254,7 +255,7 @@ function HomePage(props) {
 
                 )
               })}
-
+<br/>
             <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} />
 
         </div>

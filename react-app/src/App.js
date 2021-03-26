@@ -53,7 +53,7 @@ function App() {
           <User />
         </ProtectedRoute>
         <ThemeContext.Provider value={{value, setValue}}>
-        <Route path="/" exact={true}>
+        <Route path="/" exact={true} authenticated={authenticated} setAuthenticated={setAuthenticated}>
           <HomePage />
         </Route>
         <ProtectedRoute path="/create-comment" exact={true} authenticated={authenticated}>

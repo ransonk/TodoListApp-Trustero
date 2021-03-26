@@ -6,7 +6,14 @@
     font-size: 16px;
 }
 
-html{
+.demo-button{
+    padding: 5rem 5rem;
+    box-shadow: 10px 5px 5px black;
+
+}
+
+.demo-button:hover{
+    cursor: pointer;
 }
 
 
@@ -30,6 +37,16 @@ html{
     top: 20%;
     /* left: 40%; */
     border-radius: 5px;
+}
+
+.demo-form{
+    padding: 2rem 5rem;
+    border: 0px solid black;
+    height: 50vh;
+    position: relative;
+    top: 20%;
+    color: white;
+    justify-content: space-around;
 }
 
 .submission-form{
