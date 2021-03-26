@@ -16,6 +16,7 @@ class List(db.Model, UserMixin):
 
     tasks = db.relationship(
         "Task",
+        cascade="all, delete-orphan",
         back_populates="list"
     )
 
