@@ -18,9 +18,9 @@ def undo_seed_all():
 
 def seed_lists():
 
-    demo1 = List(name="X")
-    demo2 = List(name="Y")
-    demo3 = List(name="Z")
+    demo1 = List(name="List X")
+    demo2 = List(name="List Y")
+    demo3 = List(name="List Z")
 
     db.session.add_all([demo1,
                         demo2,

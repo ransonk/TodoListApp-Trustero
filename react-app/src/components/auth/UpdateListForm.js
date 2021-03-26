@@ -79,6 +79,11 @@ const UpdateClientForm = ({ authenticated, setAuthenticated, props }) => {
 
 
   return (
+    <>
+    <div className={'container'}>
+      <div className={'submission-form'}>
+
+
     <form onSubmit={editList}>
       <div>
         <label>Edit List Name</label>
@@ -89,10 +94,13 @@ const UpdateClientForm = ({ authenticated, setAuthenticated, props }) => {
           value={name}
           className={'input'}
 
-        ></input>
+          ></input>
         </div>
-      <button type="submit">Submit</button>
+      <button type="submit" className={'post-button'}>Submit</button>
     </form>
+          </div>
+          </div>
+    </>
   );
 };
 

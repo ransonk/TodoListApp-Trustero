@@ -77,6 +77,10 @@ const CreateClientForm = ({ authenticated, setAuthenticated, props }) => {
   }
 
   return (
+    <>
+    <div className={'container'}>
+      <div className={'submission-form'}>
+
     <form onSubmit={onPostComment}>
       <div>
         <label>Description</label>
@@ -86,10 +90,13 @@ const CreateClientForm = ({ authenticated, setAuthenticated, props }) => {
           onChange={updateDescription}
           value={description}
 
-        ></input>
+          ></input>
         </div>
-      <button type="submit">Post Comment</button>
+      <button type="submit" className={'post-button'}>Submit</button>
     </form>
+          </div>
+    </div>
+    </>
   );
 };
 

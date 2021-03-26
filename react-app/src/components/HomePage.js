@@ -209,7 +209,20 @@ function HomePage(props) {
         await deleteList(id)
       };
 
+      const changeTheme1 = () => {
+        setValue('title-1')
+      }
+      const changeTheme2 = () => {
+        setValue('title-2')
+      }
+
               return (
+                <>
+                <h1 className={value}>TRUSTERO CHALLENGE</h1>
+                <div className={'subheader'}>
+                <p onClick={changeTheme1}>Theme1</p>
+                <p onClick={changeTheme2}>Theme2</p>
+                </div>
 
                 <div className={'container'}>
 
@@ -218,6 +231,7 @@ function HomePage(props) {
 
             {separatedLists.map(({id, name}) => {
               return (
+
                 <h1>{name} <span><Button><Edit onClick={() => handleEditTitle(id)}/></Button></span>
                 <span><Button><Delete onClick={() => handleDeleteTitle(id)}/></Button></span>
                         {
@@ -242,6 +256,7 @@ function HomePage(props) {
                               }
 
                     </h1>
+
                 )
               })}
 
@@ -249,6 +264,7 @@ function HomePage(props) {
 
         </div>
         </div>
+        </>
     );
   }
 

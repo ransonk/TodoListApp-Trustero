@@ -15,7 +15,7 @@ import {ThemeContext} from './ThemeContext';
 
 
 function App() {
-  const [value, setValue] = useState('hello')
+  const [value, setValue] = useState('title-1')
   const [authenticated, setAuthenticated] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
@@ -52,11 +52,10 @@ function App() {
         <ProtectedRoute path="/users/:userId" exact={true} authenticated={authenticated}>
           <User />
         </ProtectedRoute>
+        <ThemeContext.Provider value={{value, setValue}}>
         <Route path="/" exact={true}>
-          <h1>ToDos List</h1>
           <HomePage />
         </Route>
-        <ThemeContext.Provider value={{value, setValue}}>
         <ProtectedRoute path="/create-comment" exact={true} authenticated={authenticated}>
         <CreateCommentForm />
       </ProtectedRoute>
