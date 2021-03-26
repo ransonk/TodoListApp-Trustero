@@ -13,7 +13,7 @@ import Dialog from '@material-ui/core/Dialog';
 import {Delete, MenuBook} from '@material-ui/icons/';
 import {Comment, AddCircleOutline, FlipCameraAndroid, Edit} from '@material-ui/icons/';
 import { blue } from '@material-ui/core/colors';
-import { Divider } from '@material-ui/core';
+import { Divider, Grid } from '@material-ui/core';
 import { ThemeContext } from '../ThemeContext';
 
 const emails = ['username@gmail.com', 'user02@gmail.com'];
@@ -25,7 +25,7 @@ const useStyles = makeStyles({
   addCommentButton: {
     display: 'flex',
     justifyContent: 'space-between'
-  }
+  },
 });
 
 
@@ -210,39 +210,44 @@ function HomePage(props) {
       };
 
               return (
-                <div>
+
+                <div className={'container'}>
+
+
+                <div className={'list'}>
 
             {separatedLists.map(({id, name}) => {
               return (
-                <ol>{name} <span><Button><Edit onClick={() => handleEditTitle(id)}/></Button></span>
+                <h1>{name} <span><Button><Edit onClick={() => handleEditTitle(id)}/></Button></span>
                 <span><Button><Delete onClick={() => handleDeleteTitle(id)}/></Button></span>
                         {
                           id === 1 ?
                           list1_arr.map(({name, status}) => {
                             return (
-                              <li onClick={() => handleClickOpen(name)}>{name}<span style={status ? done : inProgress}>{status ? 'Done' : 'In Progress'}</span></li>
+                              <p className={'task'} onClick={() => handleClickOpen(name)}>{name}<span style={status ? done : inProgress}>{status ? 'Done' : ' - In Progress'}</span></p>
                               )
                             }) : id === 2 ?
 
                             list2_arr.map(({name, status}) => {
                               return (
-                                <li onClick={() => handleClickOpen(name)}>{name}<span style={status ? done : inProgress}>{status ? 'Done' : 'In Progress'}</span></li>
+                                <p className={'task'} onClick={() => handleClickOpen(name)}>{name}<span style={status ? done : inProgress}>{status ? 'Done' : ' - In Progress'}</span></p>
                                 )
                               }) : id === 3 ?
 
                               list3_arr.map(({name, status}) => {
                                 return (
-                                <li onClick={() => handleClickOpen(name)}>{name}<span style={status ? done : inProgress}>{status ? 'Done' : 'In Progress'}</span></li>
+                                <p className={'task'} onClick={() => handleClickOpen(name)}>{name}<span style={status ? done : inProgress}>{status ? 'Done' : ' - In Progress'}</span></p>
                                   )
                                 }) : null
                               }
 
-                    </ol>
+                    </h1>
                 )
               })}
 
             <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} />
 
+        </div>
         </div>
     );
   }
