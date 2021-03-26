@@ -8,6 +8,8 @@ import UsersList from "./components/UsersList";
 import User from "./components/User";
 import { authenticate } from "./services/auth";
 import HomePage from './components/HomePage';
+import CreateCommentForm from './components/auth/CreateCommentForm'
+
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -29,7 +31,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <NavBar setAuthenticated={setAuthenticated} />
+      {/* <NavBar setAuthenticated={setAuthenticated} /> */}
       <Switch>
         <Route path="/login" exact={true}>
           <LoginForm
@@ -46,10 +48,13 @@ function App() {
         <ProtectedRoute path="/users/:userId" exact={true} authenticated={authenticated}>
           <User />
         </ProtectedRoute>
-        <ProtectedRoute path="/" exact={true} authenticated={authenticated}>
+        <Route path="/" exact={true}>
           <h1>ToDos List</h1>
           <HomePage />
-        </ProtectedRoute>
+        </Route>
+        <ProtectedRoute path="/create-comment" exact={true} authenticated={authenticated}>
+        <CreateCommentForm />
+      </ProtectedRoute>
       </Switch>
     </BrowserRouter>
   );
