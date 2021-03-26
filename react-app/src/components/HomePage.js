@@ -12,7 +12,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import {Delete, MenuBook} from '@material-ui/icons/';
 import AddIcon from '@material-ui/icons/Add';
-import {Comment, AddCircleOutline, FlipCameraAndroid} from '@material-ui/icons/';
+import {Comment, AddCircleOutline, FlipCameraAndroid, Edit} from '@material-ui/icons/';
 import Typography from '@material-ui/core/Typography';
 import { blue } from '@material-ui/core/colors';
 import { Divider } from '@material-ui/core';
@@ -139,6 +139,8 @@ function HomePage(props) {
         window.location.href='/update-comment'
       };
 
+
+
       const toggleStatus = async (name) => {
         const response = await fetch(`/api/tasks/toggle-status/${name}`, {
           method: "PUT",
@@ -153,6 +155,7 @@ function HomePage(props) {
 
 
         return (
+
           <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
             <DialogTitle id="simple-dialog-title">{targetTask.name}
             <span><p style={targetTask.status ? done : inProgress}>{targetTask.status ? 'Done' : 'In Progress'}</p>
@@ -201,6 +204,7 @@ function HomePage(props) {
           }
             </List>
           </Dialog>
+
         );
       }
 
@@ -211,14 +215,18 @@ function HomePage(props) {
       };
 
 
-
+      const handleEditTitle = async (id) => {
+        // e.preventDefault()
+        localStorage.setItem('CURRENT_LIST', JSON.stringify(id))
+        window.location.href='/edit-list'
+      };
 
               return (
                 <div>
 
             {separatedLists.map(({id, name}) => {
               return (
-                <ol>{name}
+                <ol>{name} <span><Button><Edit onClick={() => handleEditTitle(id)}/></Button></span>
                         {
                           id === 1 ?
                           list1_arr.map(({name, status}) => {

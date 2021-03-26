@@ -10,6 +10,7 @@ import { authenticate } from "./services/auth";
 import HomePage from './components/HomePage';
 import CreateCommentForm from './components/auth/CreateCommentForm'
 import UpdateCommentForm from './components/auth/UpdateCommentForm'
+import UpdateListForm from './components/auth/UpdateListForm'
 
 
 function App() {
@@ -58,6 +59,9 @@ function App() {
       </ProtectedRoute>
         <ProtectedRoute path="/update-comment" exact={true} authenticated={authenticated}>
         <UpdateCommentForm />
+      </ProtectedRoute>
+        <ProtectedRoute path="/edit-list" exact={true} authenticated={authenticated}>
+        <UpdateListForm />
       </ProtectedRoute>
       </Switch>
     </BrowserRouter>
