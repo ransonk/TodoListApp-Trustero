@@ -134,11 +134,6 @@ function HomePage(props) {
         window.location.reload();
       }
 
-
-
-
-
-
         return (
 
           <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
