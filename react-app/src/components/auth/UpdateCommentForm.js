@@ -60,7 +60,7 @@ const UpdateClientForm = ({ authenticated, setAuthenticated, props }) => {
   const comment_id = JSON.parse(localStorage.getItem('CURRENT_COMMENT'))
 
 
-  const wozabowza = async (e) => {
+  const editComment = async (e) => {
     e.preventDefault();
 
     const comment = await updateComment(
@@ -79,7 +79,7 @@ const UpdateClientForm = ({ authenticated, setAuthenticated, props }) => {
 
 
   return (
-    <form onSubmit={wozabowza}>
+    <form onSubmit={editComment}>
       <div>
         <label>Edit Comment</label>
         <input
