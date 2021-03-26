@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {fetchComments, fetchLists, fetchTasks, fetchSingleTask, deleteComment} from '../services/api'
+import {fetchComments, fetchLists, fetchTasks, fetchSingleTask, deleteComment, deleteList} from '../services/api'
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -221,12 +221,18 @@ function HomePage(props) {
         window.location.href='/edit-list'
       };
 
+      const handleDeleteTitle = async (id) => {
+        // e.preventDefault()
+        await deleteList(id)
+      };
+
               return (
                 <div>
 
             {separatedLists.map(({id, name}) => {
               return (
                 <ol>{name} <span><Button><Edit onClick={() => handleEditTitle(id)}/></Button></span>
+                <span><Button><Delete onClick={() => handleDeleteTitle(id)}/></Button></span>
                         {
                           id === 1 ?
                           list1_arr.map(({name, status}) => {

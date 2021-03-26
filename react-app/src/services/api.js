@@ -89,3 +89,16 @@ export const updateList = async (id, name) => {
         window.location.href = '/';
     }
 };
+
+export const deleteList = async (id) => {
+  const response = await fetch(`/api/lists/delete-list/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const resJSON = await response.json();
+  if (resJSON.message === "delete successful") {
+    window.location.href = '/';
+  }
+}

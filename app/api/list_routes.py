@@ -18,3 +18,10 @@ def updateClient(id):
     db.session.add(list)
     db.session.commit()
     return list.to_dict()
+
+@list_routes.route('/delete-list/<int:id>', methods=["GET", "DELETE"])
+def delete_workout(id):
+    list = List.query.get(id)
+    db.session.delete(list)
+    db.session.commit()
+    return {'message':'delete successful'}
