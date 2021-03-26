@@ -78,3 +78,14 @@ export const updateComment = async (id, description) => {
         window.location.href = '/';
     }
 };
+
+export const updateList = async (id, name) => {
+    const response = await fetch(`/api/lists/update-list/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name }),
+    });
+    if (response.ok) {
+        window.location.href = '/';
+    }
+};
