@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {fetchComments, fetchLists, fetchTasks} from '../services/api'
+import {fetchComments, fetchLists, fetchTasks, fetchSingleTask} from '../services/api'
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -76,10 +76,16 @@ function HomePage(props) {
     const [tasks, setTasks] = useState("")
     const [comments, setComments] = useState("")
 
-    const handleClickOpen = (task) => {
-        console.log(task)
+    const handleClickOpen = async (task) => {
         setOpen(true);
+        console.log(task)
+
+          let inform = await fetchSingleTask(task)
+          setComments(inform)
+          
       };
+
+      console.log('comments????', comments)
 
       const handleClose = (value) => {
         setOpen(false);
