@@ -24,8 +24,8 @@ export const fetchSingleTask = async (name) => {
             'Content-Type': 'application/json'
         }
     });
-    let {tasks} = await response.json();
-    return tasks
+    let {comments} = await response.json();
+    return comments
 }
 
 export const fetchComments = async () => {
