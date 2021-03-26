@@ -24,6 +24,7 @@ class Task(db.Model, UserMixin):
 
     comments = db.relationship(
         "Comment",
+        cascade="all, delete-orphan",
         back_populates="task"
     )
 
