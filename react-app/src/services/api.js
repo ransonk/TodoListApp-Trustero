@@ -37,3 +37,17 @@ export const fetchComments = async () => {
     let {comments} = await response.json();
     return comments
 }
+
+export const createComment = async (description, task_id) => {
+    const response = await fetch(`/api/comments/add-comment/${task_id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        description,
+        task_id
+      }),
+    });
+    return await response.json();
+  }

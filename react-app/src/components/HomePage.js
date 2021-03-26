@@ -12,9 +12,10 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import {MenuBook} from '@material-ui/icons/';
 import AddIcon from '@material-ui/icons/Add';
-import {Comment} from '@material-ui/icons/';
+import {Comment, AddCircleOutline} from '@material-ui/icons/';
 import Typography from '@material-ui/core/Typography';
 import { blue } from '@material-ui/core/colors';
+import { Divider } from '@material-ui/core';
 
 const emails = ['username@gmail.com', 'user02@gmail.com'];
 const useStyles = makeStyles({
@@ -22,6 +23,10 @@ const useStyles = makeStyles({
     backgroundColor: blue[100],
     color: blue[600],
   },
+  addCommentButton: {
+    display: 'flex',
+    justifyContent: 'space-between'
+  }
 });
 
 
@@ -37,9 +42,9 @@ function HomePage(props) {
 
     const handleClickOpen = async (task) => {
       setOpen(true);
-
-        let inform = await fetchSingleTask(task)
-        setTargetTask(inform)
+      let inform = await fetchSingleTask(task)
+      setTargetTask(inform)
+      localStorage.setItem('CURRENT_TASK', JSON.stringify(targetTask.id))
         console.log('inform', inform)
         let {comments: fetchedComments} = inform
         let nestedCommentArr = Object.values(fetchedComments)
@@ -118,6 +123,10 @@ function HomePage(props) {
           onClose(value);
         };
 
+        const addComment = () => {
+          window.location.href='/create-comment'
+        }
+
 
 
         return (
@@ -135,6 +144,13 @@ function HomePage(props) {
                   </ListItemAvatar>
                   <ListItemText primary={targetTask.description} />
                 </ListItem>
+                <Divider/>
+                <ListItem>
+                <Button onClick={addComment}>Add Comment
+                <AddCircleOutline fontSize='large'/>
+                </Button>
+                </ListItem>
+
 
               { comments ?
                 comments.map(comment => {
