@@ -37,6 +37,8 @@ function HomePage(props) {
   const [tasks, setTasks] = useState("")
   const [comments, setComments] = useState("")
   const [targetTask, setTargetTask] = useState({})
+  const [edit, setEdit] = useState(false)
+  const [description, setDescription] = useState("")
   const [inProgress] = useState({color: 'red'})
   const [done] = useState({color: 'green'})
 
@@ -125,11 +127,21 @@ function HomePage(props) {
 
         const addComment = () => {
           window.location.href='/create-comment'
-        }
+        };
 
         const handleDeleteComment = async (id) => {
           const deleted = await deleteComment(id)
-      }
+      };
+
+      const handleEdit = async (id) => {
+        // e.preventDefault()
+        localStorage.setItem('CURRENT_COMMENT', JSON.stringify(id))
+        window.location.href='/update-comment'
+      };
+
+
+
+
 
 
 
@@ -163,7 +175,7 @@ function HomePage(props) {
                 <ListItemText primary={comment.description}/>
                 <ListItemAvatar>
                   <Avatar>
-                    <Comment fontSize='small'/>
+                    <Comment fontSize='small' onClick={() => handleEdit(comment.id)}/>
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemAvatar>
