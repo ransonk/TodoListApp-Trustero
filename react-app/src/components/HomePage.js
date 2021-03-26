@@ -10,8 +10,9 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
-import PersonIcon from '@material-ui/icons/Person';
+import {MenuBook} from '@material-ui/icons/';
 import AddIcon from '@material-ui/icons/Add';
+import {Comment} from '@material-ui/icons/';
 import Typography from '@material-ui/core/Typography';
 import { blue } from '@material-ui/core/colors';
 
@@ -30,15 +31,18 @@ function HomePage(props) {
   const [lists, setLists] = useState("")
   const [tasks, setTasks] = useState("")
   const [comments, setComments] = useState("")
-  const [targetTask, setTargetTask] = useState("")
+  const [targetTask, setTargetTask] = useState({})
 
     const handleClickOpen = async (task) => {
       setOpen(true);
-      setTargetTask(task)
 
         let inform = await fetchSingleTask(task)
-        let nestedCommentArr = Object.values(inform)
-        setComments(...nestedCommentArr)
+        setTargetTask(inform)
+        console.log('inform', inform)
+        let {comments: fetchedComments} = inform
+        let nestedCommentArr = Object.values(fetchedComments)
+        console.log('nestedComments', nestedCommentArr)
+        setComments(nestedCommentArr)
 
       };
 
@@ -112,18 +116,28 @@ function HomePage(props) {
           onClose(value);
         };
 
+        const inProgress = {
+          color: 'red'
+        }
+
+        const done = {
+          color: 'green'
+        }
+
         return (
           <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
-            <DialogTitle id="simple-dialog-title">Set backup account</DialogTitle>
+            <DialogTitle id="simple-dialog-title">{targetTask.name}
+            <span><p style={targetTask.status ? done : inProgress}>{targetTask.status ? 'Done' : 'In Progress'}</p></span>
+            </DialogTitle>
             <List>
 
                 <ListItem button onClick={() => handleListItemClick()}>
                   <ListItemAvatar>
                     <Avatar className={classes.avatar}>
-                      <PersonIcon />
+                      <MenuBook />
                     </Avatar>
                   </ListItemAvatar>
-                  <ListItemText primary={targetTask} />
+                  <ListItemText primary={targetTask.description} />
                 </ListItem>
 
               { comments ?
@@ -132,7 +146,7 @@ function HomePage(props) {
                     <ListItem autoFocus button >
                 <ListItemAvatar>
                   <Avatar>
-                    <AddIcon />
+                    <Comment />
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText primary={comment.description} />

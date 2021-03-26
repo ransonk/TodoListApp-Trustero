@@ -15,10 +15,11 @@ def get_single_task(name):
     task = Task.query.filter_by(name=name).first()
     comments = task.return_comments()
     print(comments)
-    return {"comments": comments}
+    return {"comments": task.to_dict()}
 
-# trainer = Trainer.query.get(id)
-#     intensities = trainer.return_workoutintensities()
-#     intensitiesObj = intensities['workoutintensity']
-#     print('loook at thisssssssssssss', intensitiesObj)
-#     return {"intensities": intensitiesObj}
+# @task_routes.route('/<name>')
+# def get_single_task(name):
+#     task = Task.query.filter_by(name=name).first()
+#     comments = task.return_comments()
+#     print(comments)
+#     return {"comments": comments}

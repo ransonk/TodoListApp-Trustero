@@ -26,7 +26,7 @@ class Task(db.Model, UserMixin):
         "Comment",
         back_populates="task"
     )
-       
+
     def return_comments(self):
          return {
             "comments": [comment.to_dict() for comment in self.comments]
@@ -39,4 +39,5 @@ class Task(db.Model, UserMixin):
             "description": self.description,
             "status": self.status,
             "list_id": self.list_id,
+            "comments": [comment.to_dict() for comment in self.comments]
         }
