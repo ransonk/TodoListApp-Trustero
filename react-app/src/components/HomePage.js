@@ -37,11 +37,15 @@ function HomePage(props) {
       setTargetTask(task)
 
         let inform = await fetchSingleTask(task)
-        setComments(Object.values(inform))
+        let nestedCommentArr = Object.values(inform)
+        setComments(...nestedCommentArr)
 
       };
 
       console.log('comments????', comments)
+      let commentArr = [[1, 2]]
+      // commentArr.forEach(comment => commentArr.push(comment))
+      console.log('object.values?', commentArr)
 
       const handleClose = (value) => {
         setOpen(false);
@@ -112,8 +116,8 @@ function HomePage(props) {
           <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
             <DialogTitle id="simple-dialog-title">Set backup account</DialogTitle>
             <List>
-              {emails.map((email) => (
-                <ListItem button onClick={() => handleListItemClick(email)} key={email}>
+
+                <ListItem button onClick={() => handleListItemClick()}>
                   <ListItemAvatar>
                     <Avatar className={classes.avatar}>
                       <PersonIcon />
@@ -121,16 +125,22 @@ function HomePage(props) {
                   </ListItemAvatar>
                   <ListItemText primary={targetTask} />
                 </ListItem>
-              ))}
 
-              <ListItem autoFocus button onClick={() => handleListItemClick('addAccount')}>
+              { comments ?
+                comments.map(comment => {
+                  return (
+                    <ListItem autoFocus button >
                 <ListItemAvatar>
                   <Avatar>
                     <AddIcon />
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary="Add account" />
+                <ListItemText primary={comment.description} />
               </ListItem>
+                    )
+          })
+          : null
+          }
             </List>
           </Dialog>
         );
@@ -161,13 +171,13 @@ function HomePage(props) {
 
                             list2_arr.map((task) => {
                               return (
-                                <li>{task}</li>
+                                <li onClick={() => handleClickOpen(task)}>{task}</li>
                                 )
                               }) : id === 3 ?
 
                               list3_arr.map((task) => {
                                 return (
-                                  <li>{task}</li>
+                                <li onClick={() => handleClickOpen(task)}>{task}</li>
                                   )
                                 }) : null
                               }
