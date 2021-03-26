@@ -32,6 +32,8 @@ function HomePage(props) {
   const [tasks, setTasks] = useState("")
   const [comments, setComments] = useState("")
   const [targetTask, setTargetTask] = useState({})
+  const [inProgress] = useState({color: 'red'})
+  const [done] = useState({color: 'green'})
 
     const handleClickOpen = async (task) => {
       setOpen(true);
@@ -91,11 +93,11 @@ function HomePage(props) {
               // })
       separatedTasks.map(task => {
         if (task.list_id === 1) {
-          list1_arr.push(task.name)
+          list1_arr.push({name: task.name, status: task.status})
         } else if (task.list_id === 2) {
-          list2_arr.push(task.name)
+          list2_arr.push({name: task.name, status: task.status})
         } else if (task.list_id === 3) {
-          list3_arr.push(task.name)
+          list3_arr.push({name: task.name, status: task.status})
         }
 
       })
@@ -116,13 +118,7 @@ function HomePage(props) {
           onClose(value);
         };
 
-        const inProgress = {
-          color: 'red'
-        }
 
-        const done = {
-          color: 'green'
-        }
 
         return (
           <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
@@ -177,21 +173,21 @@ function HomePage(props) {
                 <ol>{name}
                         {
                           id === 1 ?
-                          list1_arr.map((task) => {
+                          list1_arr.map(({name, status}) => {
                             return (
-                              <li onClick={() => handleClickOpen(task)}>{task}</li>
+                              <li onClick={() => handleClickOpen(name)}>{name}<span style={status ? done : inProgress}>{status ? 'Done' : 'In Progress'}</span></li>
                               )
                             }) : id === 2 ?
 
-                            list2_arr.map((task) => {
+                            list2_arr.map(({name, status}) => {
                               return (
-                                <li onClick={() => handleClickOpen(task)}>{task}</li>
+                                <li onClick={() => handleClickOpen(name)}>{name}<span style={status ? done : inProgress}>{status ? 'Done' : 'In Progress'}</span></li>
                                 )
                               }) : id === 3 ?
 
-                              list3_arr.map((task) => {
+                              list3_arr.map(({name, status}) => {
                                 return (
-                                <li onClick={() => handleClickOpen(task)}>{task}</li>
+                                <li onClick={() => handleClickOpen(name)}>{name}<span style={status ? done : inProgress}>{status ? 'Done' : 'In Progress'}</span></li>
                                   )
                                 }) : null
                               }
