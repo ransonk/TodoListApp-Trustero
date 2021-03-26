@@ -51,3 +51,19 @@ export const createComment = async (description, task_id) => {
     });
     return await response.json();
   }
+
+  export const deleteComment = async (commentId) => {
+    const response = await fetch(`/api/comments/delete-comment/${commentId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        commentId
+      }),
+    });
+    const resJSON = await response.json();
+    if (resJSON.message === "delete successful") {
+      window.location.href = '/';
+    }
+  }

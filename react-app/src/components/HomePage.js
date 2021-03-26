@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {fetchComments, fetchLists, fetchTasks, fetchSingleTask} from '../services/api'
+import {fetchComments, fetchLists, fetchTasks, fetchSingleTask, deleteComment} from '../services/api'
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -10,7 +10,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
-import {MenuBook} from '@material-ui/icons/';
+import {Delete, MenuBook} from '@material-ui/icons/';
 import AddIcon from '@material-ui/icons/Add';
 import {Comment, AddCircleOutline} from '@material-ui/icons/';
 import Typography from '@material-ui/core/Typography';
@@ -127,6 +127,10 @@ function HomePage(props) {
           window.location.href='/create-comment'
         }
 
+        const handleDeleteComment = async (id) => {
+          const deleted = await deleteComment(id)
+      }
+
 
 
         return (
@@ -156,12 +160,17 @@ function HomePage(props) {
                 comments.map(comment => {
                   return (
                     <ListItem autoFocus button >
+                <ListItemText primary={comment.description}/>
                 <ListItemAvatar>
                   <Avatar>
-                    <Comment />
+                    <Comment fontSize='small'/>
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={comment.description} />
+                <ListItemAvatar>
+                  <Avatar>
+                    <Delete fontSize='small' onClick={() => handleDeleteComment(comment.id)}/>
+                  </Avatar>
+                </ListItemAvatar>
               </ListItem>
                     )
           })
