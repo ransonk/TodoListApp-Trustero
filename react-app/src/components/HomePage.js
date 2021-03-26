@@ -12,7 +12,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import {Delete, MenuBook} from '@material-ui/icons/';
 import AddIcon from '@material-ui/icons/Add';
-import {Comment, AddCircleOutline} from '@material-ui/icons/';
+import {Comment, AddCircleOutline, FlipCameraAndroid} from '@material-ui/icons/';
 import Typography from '@material-ui/core/Typography';
 import { blue } from '@material-ui/core/colors';
 import { Divider } from '@material-ui/core';
@@ -139,6 +139,13 @@ function HomePage(props) {
         window.location.href='/update-comment'
       };
 
+      const toggleStatus = async (name) => {
+        const response = await fetch(`/api/tasks/toggle-status/${name}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+        })
+        window.location.reload();
+      }
 
 
 
@@ -148,7 +155,11 @@ function HomePage(props) {
         return (
           <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
             <DialogTitle id="simple-dialog-title">{targetTask.name}
-            <span><p style={targetTask.status ? done : inProgress}>{targetTask.status ? 'Done' : 'In Progress'}</p></span>
+            <span><p style={targetTask.status ? done : inProgress}>{targetTask.status ? 'Done' : 'In Progress'}</p>
+            <Button onClick={() => toggleStatus(targetTask.name)}>
+              <FlipCameraAndroid />
+              </Button>
+            </span>
             </DialogTitle>
             <List>
 
