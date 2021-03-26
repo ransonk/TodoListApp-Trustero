@@ -56,11 +56,13 @@ const CreateClientForm = ({ authenticated, setAuthenticated, props }) => {
   const task_id = JSON.parse(localStorage.getItem('CURRENT_TASK'))
 
 
+
   const onPostComment = async (e) => {
     e.preventDefault();
       const comment = await createComment(
         description,
         task_id);
+        localStorage.clear();
       window.location.href = "/";
 
   };

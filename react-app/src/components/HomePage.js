@@ -44,7 +44,7 @@ function HomePage(props) {
       setOpen(true);
       let inform = await fetchSingleTask(task)
       setTargetTask(inform)
-      localStorage.setItem('CURRENT_TASK', JSON.stringify(targetTask.id))
+      localStorage.setItem('CURRENT_TASK', JSON.stringify(inform.id))
         console.log('inform', inform)
         let {comments: fetchedComments} = inform
         let nestedCommentArr = Object.values(fetchedComments)
