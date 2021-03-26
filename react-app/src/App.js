@@ -11,9 +11,11 @@ import HomePage from './components/HomePage';
 import CreateCommentForm from './components/auth/CreateCommentForm'
 import UpdateCommentForm from './components/auth/UpdateCommentForm'
 import UpdateListForm from './components/auth/UpdateListForm'
+import {ThemeContext} from './ThemeContext';
 
 
 function App() {
+  const [value, setValue] = useState('title-1')
   const [authenticated, setAuthenticated] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
@@ -50,8 +52,8 @@ function App() {
         <ProtectedRoute path="/users/:userId" exact={true} authenticated={authenticated}>
           <User />
         </ProtectedRoute>
+        <ThemeContext.Provider value={{value, setValue}}>
         <Route path="/" exact={true}>
-          <h1>ToDos List</h1>
           <HomePage />
         </Route>
         <ProtectedRoute path="/create-comment" exact={true} authenticated={authenticated}>
@@ -63,6 +65,7 @@ function App() {
         <ProtectedRoute path="/edit-list" exact={true} authenticated={authenticated}>
         <UpdateListForm />
       </ProtectedRoute>
+        </ThemeContext.Provider>
       </Switch>
     </BrowserRouter>
   );

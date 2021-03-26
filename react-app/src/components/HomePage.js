@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {fetchComments, fetchLists, fetchTasks, fetchSingleTask, deleteComment, deleteList} from '../services/api'
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,11 +11,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import {Delete, MenuBook} from '@material-ui/icons/';
-import AddIcon from '@material-ui/icons/Add';
 import {Comment, AddCircleOutline, FlipCameraAndroid, Edit} from '@material-ui/icons/';
-import Typography from '@material-ui/core/Typography';
 import { blue } from '@material-ui/core/colors';
-import { Divider } from '@material-ui/core';
+import { Divider, Grid } from '@material-ui/core';
+import { ThemeContext } from '../ThemeContext';
 
 const emails = ['username@gmail.com', 'user02@gmail.com'];
 const useStyles = makeStyles({
@@ -26,11 +25,12 @@ const useStyles = makeStyles({
   addCommentButton: {
     display: 'flex',
     justifyContent: 'space-between'
-  }
+  },
 });
 
 
 function HomePage(props) {
+  const {value, setValue} = useContext(ThemeContext)
   const [open, setOpen] = React.useState(false);
   const [selectedValue, setSelectedValue] = React.useState(emails[1]);
   const [lists, setLists] = useState("")
@@ -57,7 +57,6 @@ function HomePage(props) {
 
       console.log('comments????', comments)
       let commentArr = [[1, 2]]
-      // commentArr.forEach(comment => commentArr.push(comment))
       console.log('object.values?', commentArr)
 
       const handleClose = (value) => {
@@ -73,31 +72,18 @@ function HomePage(props) {
           let tempComments = await fetchComments();
           setLists(tempList)
           setTasks(tempTasks)
-          // setComments(tempComments)
         })()
       }, [])
 
       let separatedLists = Object.values(lists)
       let separatedTasks = Object.values(tasks)
-      // let separatedLists = Object.values(lists)
-      // console.log('separatedLists', separatedLists)
       console.log('separatedTasks', separatedTasks)
-      // console.log('tasks', tasks)
 
       let list1_arr = []
       let list2_arr = []
       let list3_arr = []
 
-      // separatedTasks.map(task => {
-        //     if (task.list_id === 1) {
-          //         list1_arr.push({task: task.name, id: task.id})
-          //     } else if (task.list_id === 2) {
-            //         list2_arr.push({task: task.name, id: task.id})
-            //     } else if (task.list_id === 3) {
-              //         list3_arr.push({task: task.name, id: task.id})
-              //     }
 
-              // })
       separatedTasks.map(task => {
         if (task.list_id === 1) {
           list1_arr.push({name: task.name, status: task.status})
@@ -134,7 +120,6 @@ function HomePage(props) {
       };
 
       const handleEdit = async (id) => {
-        // e.preventDefault()
         localStorage.setItem('CURRENT_COMMENT', JSON.stringify(id))
         window.location.href='/update-comment'
       };
@@ -148,11 +133,6 @@ function HomePage(props) {
         })
         window.location.reload();
       }
-
-
-
-
-
 
         return (
 
@@ -216,56 +196,70 @@ function HomePage(props) {
 
 
       const handleEditTitle = async (id) => {
-        // e.preventDefault()
         localStorage.setItem('CURRENT_LIST', JSON.stringify(id))
         window.location.href='/edit-list'
       };
 
       const handleDeleteTitle = async (id) => {
-        // e.preventDefault()
         await deleteList(id)
       };
 
+      const changeTheme1 = () => {
+        setValue('title-1')
+      }
+      const changeTheme2 = () => {
+        setValue('title-2')
+      }
+
               return (
-                <div>
+                <>
+                <h1 className={value}>TRUSTERO CHALLENGE</h1>
+                <div className={'subheader'}>
+                <p onClick={changeTheme1}>Theme1</p>
+                <p onClick={changeTheme2}>Theme2</p>
+                </div>
+
+                <div className={'container'}>
+
+
+                <div className={'list'}>
 
             {separatedLists.map(({id, name}) => {
               return (
-                <ol>{name} <span><Button><Edit onClick={() => handleEditTitle(id)}/></Button></span>
+
+                <h1>{name} <span><Button><Edit onClick={() => handleEditTitle(id)}/></Button></span>
                 <span><Button><Delete onClick={() => handleDeleteTitle(id)}/></Button></span>
                         {
                           id === 1 ?
                           list1_arr.map(({name, status}) => {
                             return (
-                              <li onClick={() => handleClickOpen(name)}>{name}<span style={status ? done : inProgress}>{status ? 'Done' : 'In Progress'}</span></li>
+                              <p className={'task'} onClick={() => handleClickOpen(name)}>{name}<span style={status ? done : inProgress}>{status ? 'Done' : ' - In Progress'}</span></p>
                               )
                             }) : id === 2 ?
 
                             list2_arr.map(({name, status}) => {
                               return (
-                                <li onClick={() => handleClickOpen(name)}>{name}<span style={status ? done : inProgress}>{status ? 'Done' : 'In Progress'}</span></li>
+                                <p className={'task'} onClick={() => handleClickOpen(name)}>{name}<span style={status ? done : inProgress}>{status ? 'Done' : ' - In Progress'}</span></p>
                                 )
                               }) : id === 3 ?
 
                               list3_arr.map(({name, status}) => {
                                 return (
-                                <li onClick={() => handleClickOpen(name)}>{name}<span style={status ? done : inProgress}>{status ? 'Done' : 'In Progress'}</span></li>
+                                <p className={'task'} onClick={() => handleClickOpen(name)}>{name}<span style={status ? done : inProgress}>{status ? 'Done' : ' - In Progress'}</span></p>
                                   )
                                 }) : null
                               }
 
-                    </ol>
+                    </h1>
+
                 )
               })}
 
-            {/* <Typography variant="subtitle1">Selected: {selectedValue}</Typography>
-            <br />
-            <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-            Open simple dialog
-          </Button> */}
             <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} />
 
         </div>
+        </div>
+        </>
     );
   }
 
